@@ -9,6 +9,7 @@ import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Separator } from "@/components/ui/separator";
 import { useRouter } from "next/navigation";
+import { siteConfig } from "@/lib/config";
 
 export default function SignupPage() {
   const router = useRouter();
@@ -32,7 +33,7 @@ export default function SignupPage() {
           </div>
           <div className="mt-4 space-y-1">
             <h2 className="text-xl font-semibold">
-              Connect with Community Play & Earn Rewards
+              {siteConfig.tagline}
             </h2>
             <p className="text-sm text-muted-foreground">
               Join a global network of players, improve your skills, and earn
@@ -51,16 +52,14 @@ export default function SignupPage() {
               <div className="space-y-2">
                 <Label htmlFor="username">Username</Label>
                 <Input
-                  id="username"
-                  placeholder="john_doe"
+                  id="username" aria-label="Username" placeholder="john_doe"
                   className="glass-input"
                 />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="email">Email</Label>
                 <Input
-                  id="email"
-                  type="email"
+                  id="email" aria-label="Email address" type="email"
                   placeholder="you@example.com"
                   className="glass-input"
                 />

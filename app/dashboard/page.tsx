@@ -5,7 +5,11 @@ import { DashboardHeader } from "@/components/dashboard/header"
 import { WidgetCard } from "@/components/dashboard/widget-card"
 import { StatCard } from "@/components/dashboard/stat-card"
 import { CircularProgress } from "@/components/dashboard/circular-progress"
+import { DashboardFooter } from "@/components/dashboard/footer"
 import { Target, Gamepad2, Gift } from "lucide-react"
+import { WEEKLY_LEADERBOARD } from "@/lib/leaderboard"
+import { PLAYER_STATS, SKILL_PROGRESS } from "@/lib/stats"
+import { UPCOMING_EVENTS } from "@/lib/events"
 
 export default function DashboardPage() {
   return (
@@ -65,10 +69,10 @@ export default function DashboardPage() {
                 </div>
               </div>
               <div className="mt-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
-                <StatCard title="Games" value="350" />
-                <StatCard title="Win Rate" value="62%" />
-                <StatCard title="Elo" value="1340" />
-                <StatCard title="Pickles" value="100" ring />
+                <StatCard title="Games" value={String(PLAYER_STATS.gamesPlayed)} />
+                <StatCard title="Win Rate" value={`${PLAYER_STATS.winRate}%`} />
+                <StatCard title="Elo" value={String(PLAYER_STATS.elo)} />
+                <StatCard title="Pickles" value={String(PLAYER_STATS.pickles)} ring />
               </div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -76,34 +80,34 @@ export default function DashboardPage() {
                 <ul className="text-sm space-y-2 text-muted-foreground">
                   <li className="flex items-center justify-between">
                     <span>Matches this month</span>
-                    <span>14</span>
+                    <span>{PLAYER_STATS.matchesThisMonth}</span>
                   </li>
                   <li className="flex items-center justify-between">
                     <span>Aces</span>
-                    <span>23</span>
+                    <span>{PLAYER_STATS.aces}</span>
                   </li>
                   <li className="flex items-center justify-between">
                     <span>Longest Rally</span>
-                    <span>32</span>
+                    <span>{PLAYER_STATS.longestRally}</span>
                   </li>
                 </ul>
               </WidgetCard>
 
               <WidgetCard title="Skill Progress">
                 <div className="flex items-center gap-6">
-                  <CircularProgress value={72} label="Serving" />
+                  <CircularProgress value={SKILL_PROGRESS.serving} label="Serving" />
                   <div className="grid gap-2 text-sm">
                     <div className="flex items-center justify-between">
                       <span className="text-muted-foreground">Backhand</span>
-                      <span>64%</span>
+                      <span>{SKILL_PROGRESS.backhand}%</span>
                     </div>
                     <div className="flex items-center justify-between">
                       <span className="text-muted-foreground">Footwork</span>
-                      <span>58%</span>
+                      <span>{SKILL_PROGRESS.footwork}%</span>
                     </div>
                     <div className="flex items-center justify-between">
                       <span className="text-muted-foreground">Consistency</span>
-                      <span>81%</span>
+                      <span>{SKILL_PROGRESS.consistency}%</span>
                     </div>
                   </div>
                 </div>
@@ -113,30 +117,24 @@ export default function DashboardPage() {
           <div className="space-y-4">
             <WidgetCard title="Weekly Leaderboard">
               <ul className="space-y-3 text-sm">
-                {["Simone", "Thiago", "Harper", "Ava", "Mia"].map((p, i) => (
-                  <li key={p} className="flex items-center justify-between">
+                {WEEKLY_LEADERBOARD.map((p, i) => (
+                  <li key={p.id} className="flex items-center justify-between">
                     <span className="text-muted-foreground">
-                      {i + 1}. {p}
+                      {i + 1}. {p.name}
                     </span>
-                    <span className="px-2 py-0.5 rounded glass">Elo {1400 - i * 12}</span>
+                    <span className="px-2 py-0.5 rounded glass">Elo {p.elo}</span>
                   </li>
                 ))}
               </ul>
             </WidgetCard>
             <WidgetCard title="Upcoming Events">
               <ul className="space-y-3 text-sm text-muted-foreground">
-                <li className="flex items-center justify-between">
-                  <span>Club Open</span>
-                  <span>Fri</span>
-                </li>
-                <li className="flex items-center justify-between">
-                  <span>Evening Ladder</span>
-                  <span>Sun</span>
-                </li>
-                <li className="flex items-center justify-between">
-                  <span>City Tournament</span>
-                  <span>Next Tue</span>
-                </li>
+                {UPCOMING_EVENTS.map((event) => (
+                  <li key={event.name} className="flex items-center justify-between">
+                    <span>{event.name}</span>
+                    <span>{event.day}</span>
+                  </li>
+                ))}
               </ul>
             </WidgetCard>
             <WidgetCard title="Nearby Courts">
@@ -148,6 +146,7 @@ export default function DashboardPage() {
             </WidgetCard>
           </div>
         </div>
+        <DashboardFooter />
       </section>
     </main>
   )

@@ -7,8 +7,8 @@ import { Suspense } from "react";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "assignment",
-  description: "assignment",
+  title: "PickZone",
+  description: "Community play and rewards for racket sports",
 };
 
 export default function RootLayout({
